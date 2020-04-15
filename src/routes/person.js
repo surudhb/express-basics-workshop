@@ -10,7 +10,8 @@ router.get('/', (request, response) => {
         console.log(`Req method -- Asking for: ${request.query.name}`);
         response.json(people.filter(person => person.name === request.query.name));
     } else {
-        response.status(400).json({ msg: `No name provided`});
+        console.log("Send everybody");
+        response.json(people);
     }
 });
 
@@ -28,10 +29,13 @@ router.get('/err/or', (req, res) => {
 
 // CREATE person
 router.post('/', (req, res) => {
+    // verification for creation would be here?
     const newPerson = req.body;
+    newPerson["age"] = parseInt(newPerson["age"]);
     newPerson["id"] = uuid.v4();
     people.push(newPerson);
-    res.status(200).json(people);
+    // res.status(200).json(people);
+    res.redirect('/'); // go back to home page
 });
 
 // UPDATE person
