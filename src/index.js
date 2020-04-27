@@ -9,7 +9,7 @@ const app = express();
 
 // Body parser middleware for POST requests
 // allows us to 'decipher' what's being sent
-app.use(express.json());
+app.use(express.json()); //body-parser
 app.use(express.urlencoded({extended: false}));
 
 
@@ -19,16 +19,17 @@ app.set('view engine', 'handlebars');
 
 // app middleware
 app.use((req, res, next) => {
+    // function with no mount path, executed every time app receives request
     console.log(`${new Date().toString()} --> ${req.originalUrl}`);
     console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
     next(); //call next function in the pipeline
 });
 
-app.get('/', (req, res) => res.render('index', {
-    title: 'People API',
-    subtitle: 'for the people',
-    people: people,
-}));
+// app.get('/', (req, res) => res.render('index', {
+//     title: 'People API',
+//     subtitle: 'for the people',
+//     people: people,
+// }));
 
 // start of middleware chain
 
